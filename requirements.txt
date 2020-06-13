@@ -1,5 +1,4 @@
 Flask
-pandas
 watson_machine_learning_client
 datetime
 numpy

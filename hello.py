@@ -11,7 +11,7 @@ cf_port = os.getenv("PORT")
 # Only get method by default
 @app.route('/')
 def hello():
-    return 'Hello World'
+    return 'Hello World!'
 
 if __name__ == '__main__':
 	if cf_port is None:

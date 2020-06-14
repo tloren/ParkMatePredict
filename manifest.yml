@@ -1,3 +1,8 @@
----
 applications:
-  random-route: true
+- name: appname
+  host: app_hostname
+  buildpack: java_buildpack
+  instances: 2
+  memory: 512M
+  disk_quota: 512M
+  path: .

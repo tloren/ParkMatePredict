@@ -3,6 +3,6 @@ applications:
   host: app_hostname
   buildpack: java_buildpack
   instances: 2
-  memory: 512M
+  memory: 256M
   disk_quota: 512M
   path: .

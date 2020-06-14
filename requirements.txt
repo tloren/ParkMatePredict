@@ -1,4 +1,3 @@
 Flask
-WatsonMachineLearningAPIClient
-datetime
+watson-machine-learning-client
 pandas

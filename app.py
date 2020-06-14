@@ -6,15 +6,15 @@ app = Flask(__name__)
 # http://docs.cloudfoundry.org/devguide/deploy-apps/environment-variable.html#PORT
 
 
-cf_port = os.getenv("PORT")
+# set the port dynamically with a default of 3000 for local development
+port = int(os.getenv('PORT', '3000'))
+
 
 # Only get method by default
-@app.route('/')
+@app.route('/test')
 def hello():
-    return 'Hello World!'
+    return 'Hello World fro python!'
 
+# start the app
 if __name__ == '__main__':
-	if cf_port is None:
-		app.run(host='0.0.0.0', port=5000, debug=True)
-	else:
-		app.run(host='0.0.0.0', port=int(cf_port), debug=True)
+    app.run(host='0.0.0.0', port=port)

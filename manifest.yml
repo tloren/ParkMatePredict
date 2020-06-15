@@ -1,4 +1,5 @@
+---
 applications:
-- memory: 256M
-  disk_quota: 256M
-  path: .
+ - name: ParkingFinderService
+   random-route: true
+   memory: 128M

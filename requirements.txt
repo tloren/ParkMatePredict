@@ -1,3 +1,0 @@
-Flask
-watson-machine-learning-client
-pandas

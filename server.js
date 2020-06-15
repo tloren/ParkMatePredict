@@ -4,6 +4,15 @@ var cfenv = require("cfenv");
 var request = require("request");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const btoa = require("btoa");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+dotenv.config()
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// parse application/json
+app.use(bodyParser.json())
+
 const wml_credentials = new Map();
 
 // -------------------Prediction--------------------
@@ -19,8 +28,35 @@ function apiPost(scoring_url, token, mlInstanceID, payload, loadCallback, errorC
     oReq.send(payload);
 }
 
+processResponse = function(response) {
+    results = []
+    column_headers = ['-37.795,144.96', '-37.8,144.96', '-37.8,144.965', '-37.805,144.94',
+       '-37.805,144.945', '-37.805,144.95', '-37.805,144.955',
+       '-37.805,144.965', '-37.81,144.945', '-37.81,144.95', '-37.81,144.955',
+       '-37.81,144.96', '-37.81,144.965', '-37.81,144.97', '-37.81,144.975',
+       '-37.81,144.98', '-37.815,144.935', '-37.815,144.94', '-37.815,144.945',
+       '-37.815,144.95', '-37.815,144.955', '-37.815,144.96',
+       '-37.815,144.965', '-37.815,144.97', '-37.815,144.975',
+       '-37.815,144.98', '-37.82,144.935', '-37.82,144.94', '-37.82,144.945',
+       '-37.82,144.95', '-37.82,144.955', '-37.82,144.96', '-37.82,144.965',
+       '-37.82,144.97', '-37.82,144.975', '-37.82,144.98', '-37.825,144.94',
+       '-37.825,144.945', '-37.825,144.95', '-37.825,144.955',
+       '-37.825,144.96', '-37.825,144.965', '-37.83,144.96', '-37.83,144.965',
+       '-37.83,144.97', '-37.835,144.965', '-37.835,144.97']
+    var header;
+    for ( i=0; i<column_headers.length; i++){
+        loc = column_headers[i].split(",");
+        lat = loc[0];
+        lon = loc[1];
+        temp = {"lat":lat, "lon":lon, "val":response[i]}
+        results.push(temp)
+    }
+    console.log(results)
+    return results
+}
 
-app.get('/api/test_message', function(req, res) {
+
+app.get('/api/predict', function(req, res, next) {
     var apikey = process.env.apikey
 
     // Get an access token from IBM Cloud REST API
@@ -43,7 +79,7 @@ app.get('/api/test_message', function(req, res) {
             }
             console.log("Scoring response");
             console.log(parsedPostResponse);
-            res.json(parsedPostResponse.values[0][0])
+            res.json(processResponse(parsedPostResponse.values[0][0]))
         }, function (error) {
             throw error;
         });

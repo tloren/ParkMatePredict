@@ -46,8 +46,8 @@ processResponse = function(response) {
     var header;
     for ( i=0; i<column_headers.length; i++){
         loc = column_headers[i].split(",");
-        lat = loc[0];
-        lon = loc[1];
+        lat = parseFloat(loc[0]);
+        lon = parseFloat(loc[1]);
         temp = {"bounds":[[lat, lon], [lat+0.05, lon+0.05]], "val":response[i]}
         results.push(temp)
     }

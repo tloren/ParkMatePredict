@@ -48,7 +48,7 @@ processResponse = function(response) {
         loc = column_headers[i].split(",");
         lat = parseFloat(loc[0]);
         lon = parseFloat(loc[1]);
-        temp = {"bounds":[[lat, lon], [lat+0.05, lon+0.05]], "val":response[i]}
+        temp = {"bounds":[[lat, lon], [lat+0.005, lon+0.005]], "val":response[i]}
         results.push(temp)
     }
     console.log(results)

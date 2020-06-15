@@ -39,13 +39,13 @@ app.get('/api/test_message', function(req, res) {
             try {
                 parsedPostResponse = JSON.parse(this.responseText);
             } catch (ex) {
-                // TODO: handle parsing exception
+                throw ex
             }
             console.log("Scoring response");
             console.log(parsedPostResponse);
             res.json(parsedPostResponse.values[0][0])
         }, function (error) {
-            console.log(error);
+            throw error;
         });
 
     });

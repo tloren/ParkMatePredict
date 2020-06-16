@@ -56,7 +56,7 @@ processResponse = function(response) {
 }
 
 
-app.get('/api/predict', function(req, res, next) {
+app.post('/api/predict', function(req, res, next) {
     var apikey = process.env.apikey
 
     // Get an access token from IBM Cloud REST API
@@ -77,8 +77,6 @@ app.get('/api/predict', function(req, res, next) {
             } catch (ex) {
                 throw ex
             }
-            console.log("Scoring response");
-            console.log(parsedPostResponse);
             res.json(processResponse(parsedPostResponse.values[0][0]))
         }, function (error) {
             throw error;

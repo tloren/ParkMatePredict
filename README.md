@@ -1,7 +1,7 @@
 # ParkingFinder
 A web service for forecating parking in the city of Melbourne using  IBM Watson ML services
 
-## Starting the app locally
+### Starting the app locally
 
 In the project directory, you can run:
 

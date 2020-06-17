@@ -123,6 +123,7 @@ processRequest = function(body) {
     windowSize = 3;
     inc = 0.005;
     values = Array.from(Array(windowSize), _ => Array(size).fill(0));
+    console.log(values);
     //Convert to date object
     for ( i=0; i<windowSize; i++){
         body[i].modified = new Date(body[i].modified)
@@ -147,7 +148,9 @@ processRequest = function(body) {
                     bayCount[i]++;
                 }
             }
-            values[j][i]/=bayCount[i];
+            if(bayCount[i]>0){
+                values[j][i]/=bayCount[i];
+            }  
         }
     }
     return JSON.stringify(values)
@@ -181,6 +184,7 @@ app.post('/api/predict', function(req, res, next) {
     var options = { url     : "https://iam.bluemix.net/oidc/token",
                     headers : { "Content-Type"  : "application/x-www-form-urlencoded" },
                     body    : "apikey=" + apikey + "&grant_type=urn:ibm:params:oauth:grant-type:apikey" };
+    console.log(req.body);
     request.post( options, ( error, response, body ) => {
         var iam_token = JSON.parse( body )["access_token"];
         const wmlToken = "Bearer " + iam_token;
@@ -193,7 +197,6 @@ app.post('/api/predict', function(req, res, next) {
             let parsedPostResponse;
             try {
                 parsedPostResponse = JSON.parse(this.responseText);
-                console.log(parsedPostResponse)
                 res.json(processResponse(parsedPostResponse.values[0][0]))
             } catch (ex) {
                 throw ex
